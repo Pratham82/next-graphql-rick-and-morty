@@ -1,17 +1,23 @@
 import { useQuery } from '@apollo/client'
 import { useState } from 'react'
-import Loader from '../../public/svg/Loader'
-import { GET_ALL_CHARACTERS_QUERY } from '../../graphql/characters'
-import { CharacterListVars, CharactersListData } from '../../types'
+import { FILTER_CHARACTER_BY_NAME_AND_ID } from '../../graphql'
+import { CharactersListData, FindCharactersByName } from '../../types'
+import Container from '../../components/Container'
+import Header from '../../components/Header'
+import CharacterList from '../../components/CharacterList'
+import classNames from 'classnames'
+import SearchBar from '../../components/SearchBar'
 
-const CharacterList: React.FC = () => {
+const Characters: React.FC = () => {
   const [page, setPage] = useState(1)
+  const [query, setQuery] = useState('')
 
-  const { loading, error, data } = useQuery<
+  const { data, loading, error } = useQuery<
     CharactersListData,
-    CharacterListVars
-  >(GET_ALL_CHARACTERS_QUERY, {
+    FindCharactersByName
+  >(FILTER_CHARACTER_BY_NAME_AND_ID, {
     variables: {
+      name: query,
       page: page,
     },
   })
@@ -22,32 +28,14 @@ const CharacterList: React.FC = () => {
     .fill(0)
     .map((_, i) => i + 1)
 
+  const setTopLevelQuery = (query: string) => setQuery(query)
+
   return (
-    <div className="bg-slate-200">
-      <h1 className="text-center text-3xl">Rick and Morty </h1>
-      <h2 className="text-center text-2xl">Characters</h2>
-      <p>
-        Total pages &nbsp;
-        {totalPages}
-      </p>
-      <div className="flex h-full flex-wrap justify-center">
-        <div className="">{loading && <Loader />}</div>
-        {data &&
-          data.characters.results.map(({ id, name, image }) => {
-            return (
-              <div
-                className="m-2 cursor-pointer rounded-md bg-white text-center shadow-md transition ease-in hover:scale-105 hover:shadow-none"
-                key={id}
-              >
-                <img src={image} alt={name} className="rounded-t-md" />
-                <p key={name} className="my-4 text-lg">
-                  {name}
-                </p>
-              </div>
-            )
-          })}
-      </div>
-      <div className="flex">
+    <Container>
+      <Header />
+      <SearchBar setTopLevelQuery={(text: string) => setTopLevelQuery(text)} />
+      <CharacterList data={data} loading={loading} error={error} />
+      <div className="my-6 flex justify-center">
         <div className="flex items-center">
           <button
             onClick={() => setPage((p) => p - 1)}
@@ -57,24 +45,19 @@ const CharacterList: React.FC = () => {
             Previous
           </button>
         </div>
-        <div className="h-18 flex overflow-scroll">
-          {arrayTotalPages.map((p) =>
-            p === page ? (
-              <button
-                className="m-2 rounded-md bg-slate-600 p-4 text-white"
-                onClick={() => setPage(p)}
-              >
-                {p}
-              </button>
-            ) : (
-              <button
-                className="m-2 rounded-md bg-slate-300 p-4"
-                onClick={() => setPage(p)}
-              >
-                {p}
-              </button>
-            )
-          )}
+        <div className="h-18 mx-4 flex overflow-x-scroll ">
+          {arrayTotalPages.map((p, i) => (
+            <button
+              className={classNames(`m-2 rounded-md p-4`, {
+                'bg-slate-600 text-white': p === page,
+                'bg-slate-300': p !== page,
+              })}
+              onClick={() => setPage(p)}
+              key={i}
+            >
+              {p}
+            </button>
+          ))}
         </div>
         <div className="flex items-center">
           <button
@@ -86,14 +69,8 @@ const CharacterList: React.FC = () => {
           </button>
         </div>
       </div>
-    </div>
+    </Container>
   )
 }
 
-export default CharacterList
-
-// export default function CharacterList({
-//   name,
-// }: CharacterListProps): JSX.Element {
-//   return <div>Test</div>
-// }
+export default Characters
