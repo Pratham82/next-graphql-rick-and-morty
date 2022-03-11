@@ -23,8 +23,6 @@ export default function Character() {
     }
   )
 
-  console.log({ id, loading, error, data, pathname })
-
   return (
     <Container>
       <Header />
