@@ -12,11 +12,11 @@ export default function Header(): JSX.Element {
   }
 
   return (
-    <div className="my-5 py-2">
-      <h1 className="text-center text-3xl font-semibold text-slate-600">
+    <div className=" fixed z-10 w-screen border-b border-b-slate-400 bg-slate-400/50 py-4 shadow-md backdrop-blur-2xl ">
+      <h1 className=" text-center text-3xl font-semibold text-slate-600 ">
         Rick and Morty Fandom
       </h1>
-      <nav className="text flex list-none justify-center pt-4 text-lg text-slate-600">
+      <nav className="text text-slate-00 flex list-none justify-center pt-4 text-lg">
         {links.map((link, i) => (
           <li
             key={i}

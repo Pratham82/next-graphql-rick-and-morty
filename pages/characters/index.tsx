@@ -3,7 +3,6 @@ import { useState } from 'react'
 import { FILTER_CHARACTER_BY_NAME_AND_ID } from '../../graphql'
 import { CharactersListData, FindCharactersByName } from '../../types'
 import Container from '../../components/Container'
-import Header from '../../components/Header'
 import CharacterList from '../../components/CharacterList'
 import classNames from 'classnames'
 import SearchBar from '../../components/SearchBar'
@@ -32,7 +31,6 @@ const Characters: React.FC = () => {
 
   return (
     <Container>
-      <Header />
       <SearchBar setTopLevelQuery={(text: string) => setTopLevelQuery(text)} />
       <CharacterList data={data} loading={loading} error={error} />
       <div className="my-6 flex justify-center">
