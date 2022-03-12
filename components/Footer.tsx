@@ -5,7 +5,7 @@ import Twitter from '../public/svg/Twitter'
 
 export default function Footer() {
   return (
-    <footer className="fixed bottom-0 z-0 w-screen border-t border-slate-300 bg-slate-400/50 backdrop-blur-xl">
+    <footer className="bottom-0 z-0 w-full border-t border-slate-300 bg-slate-400/50 backdrop-blur-lg">
       <div className="mt-2 flex h-10 w-full items-end justify-center ">
         <div className="mx-2">
           <a
