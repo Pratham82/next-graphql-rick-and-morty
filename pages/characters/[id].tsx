@@ -1,6 +1,8 @@
 import { useQuery } from '@apollo/client'
 import { useRouter } from 'next/router'
 import Container from '../../components/Container'
+import ErrorMessage from '../../components/ErrorMessage'
+import Footer from '../../components/Footer'
 import Header from '../../components/Header'
 import { GET_CHARACTER_BY_ID } from '../../graphql'
 import { Loader, Back, Error } from '../../public/svg/'
@@ -25,31 +27,21 @@ export default function Character() {
 
   return (
     <Container>
-      <Header />
       <button
-        className="text-md mb-4 rounded-md bg-slate-500 px-6 py-3 text-white shadow-md hover:shadow-sm active:translate-x-0"
+        className="text-md my-4 rounded-md bg-slate-500 px-6 py-3 text-white shadow-md hover:shadow-sm active:translate-x-0"
         onClick={() => router.back()}
       >
         <div className="flex">
           <div className="mr-3 w-6">
             <Back />
           </div>
-          <span>Characters</span>
+          <span>Go Back</span>
         </div>
       </button>
       <div className="flex items-center justify-center">
         {loading && <Loader />}
       </div>
-      <div>
-        {error && (
-          <div className="text-red-500">
-            <div className="scale-75">
-              <Error />
-            </div>
-            <p className="text-xl ">Unable to Fetch Data</p>
-          </div>
-        )}
-      </div>
+      <div>{error && <ErrorMessage />}</div>
       {data && (
         <div
           className="flex flex-col justify-center rounded-xl bg-white p-6 shadow-lg transition ease-in-out hover:shadow-sm sm:flex-row

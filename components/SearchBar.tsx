@@ -22,7 +22,7 @@ export default function SearchBar({ setTopLevelQuery }: SearchBarProps) {
   }
 
   return (
-    <div className="flex justify-center">
+    <div className="flex justify-center pt-5">
       <input
         type="text"
         value={query}
