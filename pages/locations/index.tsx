@@ -6,7 +6,7 @@ export default function Locations() {
   return (
     <Container>
       <h2 className="self-center pt-4 text-center text-5xl text-slate-600">
-        WIP 🚧
+        WIP 🚧 testing out dev branch
       </h2>
     </Container>
   )
